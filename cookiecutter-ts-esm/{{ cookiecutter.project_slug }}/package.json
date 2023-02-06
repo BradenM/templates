@@ -47,18 +47,20 @@
     "pnpm": "^{{ (cookiecutter.__pnpm | version_dict).major | default('7') }}"
   },
   "scripts": {
+    {% if cookiecutter.project_type == 'PACKAGE' -%}
     "prepare": "is-ci || husky install",
-    "build": "unbuild",
-    "dev": "unbuild --stub",
     "lint": "xo .",
     "lint:fix": "xo --fix .",
+    {% endif %}
+    "build": "unbuild",
+    "dev": "unbuild --stub",
     "prepublishOnly": "nr build",
-    "release": "bumpp && npm publish",
-    "start": "esno src/index.ts",
+    "start": "tsx src/index.ts",
     "test": "vitest",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {{ render_deps(cookiecutter.dependencies.runtime) }},
+  {% if cookiecutter.project_type == 'PACKAGE' -%}
   "devDependencies": {{ render_deps(cookiecutter.dependencies.dev) }},
   "xo": {
     "prettier": true,
@@ -85,4 +87,5 @@
       "xo --fix"
     ]
   }
+  {%- endif %}
 }

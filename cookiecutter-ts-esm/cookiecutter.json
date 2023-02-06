@@ -1,6 +1,10 @@
 {
   "project_name": "Project Name",
   "project_slug": "{{ cookiecutter.project_name | slugify }}",
+  "project_type": [
+    "PACKAGE",
+    "SUB_PACKAGE"
+  ],
   "description": "Project description",
   "nodejs_version": "latest",
   "pnpm_version": "latest",
