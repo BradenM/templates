@@ -1,0 +1,14 @@
+{
+  "action_name": "My Action",
+  "project_name": "{{ cookiecutter.action_name.lower().replace(' ', '_').replace('-', '_') }}",
+  "full_name": "Braden Mars",
+  "email": "bradenmars@bradenmars.me",
+  "description": "A GitHub Composite Action",
+  "python_version": "3.11",
+  "requirements": {
+    "pydantic": "==1.10.4",
+    "pygithub": "==1.57",
+    "httpx": "==0.23.3",
+    "loguru": "==0.6.0"
+  }
+}

@@ -1,0 +1,13 @@
+name: "{{ cookiecutter.action_name }}"
+description: "{{ cookiecutter.description }}"
+inputs:
+  user_token:
+    description: User PAT Token.
+    required: true
+  token:
+    description: Workflow Token. Defaults to user_token.
+    default: ""
+    required: false
+runs:
+  using: "docker"
+  image: "Dockerfile"
