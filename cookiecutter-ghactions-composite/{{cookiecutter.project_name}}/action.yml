@@ -1,0 +1,16 @@
+name: "{{ cookiecutter.action_name }}"
+description: "{{ cookiecutter.description }}"
+inputs:
+  input1:
+    description: Desc1
+    required: true
+  input2:
+    description: Desc2
+    default: "false"
+    required: false
+runs:
+  using: composite
+  steps:
+    - name: Do something.
+      shell: bash
+      run: echo Hi

@@ -1,0 +1,7 @@
+{
+  "action_name": "My Action",
+  "project_name": "{{ cookiecutter.action_name.lower().replace(' ', '_').replace('-', '_') }}",
+  "full_name": "Braden Mars",
+  "email": "bradenmars@bradenmars.me",
+  "description": "A GitHub Composite Action"
+}
