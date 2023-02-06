@@ -1,0 +1,88 @@
+{% macro render_deps(deps) -%}
+  {%- set latest = deps.latest | zip_dict(deps.latest | map("npm_latest")) -%}
+  {{ latest | dict_merge(deps.packages) | jsonify }}
+{%- endmacro %}
+{
+  "name": "{{ cookiecutter.project_slug }}",
+  "type": "module",
+  "version": "0.0.0",
+  {% if cookiecutter.private -%}
+  "private": true,
+  {%- endif %}
+  "packageManager": "pnpm@{{ cookiecutter.__pnpm }}",
+  "description": "{{ cookiecutter.description }}",
+  "author": "{{ cookiecutter.author }}",
+  "license": "MIT",
+  "homepage": "{{ cookiecutter.project_url }}#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+{{ cookiecutter.git_url }}"
+  },
+  "bugs": "{{ cookiecutter.project_url }}/issues",
+  "keywords": [],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": "{{ cookiecutter.__nodejs | nodejs_major }}",
+    "pnpm": "^{{ (cookiecutter.__pnpm | version_dict).major | default('7') }}"
+  },
+  "scripts": {
+    "prepare": "is-ci || husky install",
+    "build": "unbuild",
+    "dev": "unbuild --stub",
+    "lint": "xo .",
+    "lint:fix": "xo --fix .",
+    "prepublishOnly": "nr build",
+    "release": "bumpp && npm publish",
+    "start": "esno src/index.ts",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {{ render_deps(cookiecutter.dependencies.runtime) }},
+  "devDependencies": {{ render_deps(cookiecutter.dependencies.dev) }},
+  "xo": {
+    "prettier": true,
+    "envs": [
+      "node",
+      "es2022"
+    ],
+    "semicolon": false,
+    "rules": {
+      "@typescript-eslint/consistent-type-definitions": [
+        "error",
+        "interface"
+      ],
+      "@typescript-eslint/naming-convention": "warn",
+      "import/extensions": "off",
+      "n/prefer-global/process": "off",
+      "no-template-curly-in-string": "warn",
+      "@typescript-eslint/no-redeclare": "warn",
+      "unicorn/no-await-expression-member": "warn"
+    }
+  },
+  "lint-staged": {
+    "*.{json,ts}": [
+      "xo --fix"
+    ]
+  }
+}

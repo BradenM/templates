@@ -1,0 +1,60 @@
+{
+  "project_name": "Project Name",
+  "project_slug": "{{ cookiecutter.project_name | slugify }}",
+  "description": "Project description",
+  "nodejs_version": "latest",
+  "pnpm_version": "latest",
+  "full_name": "Braden Mars",
+  "email": "bradenmars@bradenmars.me",
+  "author": "{{ cookiecutter.full_name }} <{{ cookiecutter.email }}>",
+  "git_owner": "BradenM",
+  "git_repo": "{{ cookiecutter.project_slug }}",
+  "git_url": "https://github.com/{{ cookiecutter.git_owner }}/{{ cookiecutter.git_repo }}.git",
+  "project_url": "https://github.com/{{ cookiecutter.git_owner }}/{{ cookiecutter.git_repo }}",
+  "private": [
+    false,
+    true
+  ],
+  "dependencies": {
+    "dev": {
+      "latest": [
+        "{{ cookiecutter.__tsconfig }}",
+        "unbuild",
+        "@antfu/ni",
+        "@types/node",
+        "xo",
+        "tsx",
+        "rimraf",
+        "typescript",
+        "vitest",
+        "prettier",
+        "lint-staged",
+        "husky",
+        "is-ci",
+        "lint-staged",
+        "bumpp",
+        "pnpm"
+      ],
+      "packages": {
+        "pnpm": "{{ cookiecutter.__pnpm }}"
+      }
+    },
+    "runtime": {
+      "latest": [],
+      "packages": {}
+    }
+  },
+  "__nodejs": "{{ cookiecutter.nodejs_version | asdf_latest(plugin='nodejs') }}",
+  "__pnpm": "{{ cookiecutter.pnpm_version | asdf_latest(plugin='pnpm') }}",
+  "__tsconfig": "@tsconfig/node-{{ cookiecutter.__nodejs | nodejs_major }}-strictest-esm",
+  "_extensions": [
+    "cookiecutter.extensions.JsonifyExtension",
+    "cookiecutter.extensions.SlugifyExtension",
+    "local_ext.asdf_latest",
+    "local_ext.nodejs_major",
+    "local_ext.npm_latest",
+    "local_ext.dict_merge",
+    "local_ext.zip_dict",
+    "local_ext.version_dict"
+  ]
+}

@@ -1,0 +1,2 @@
+nodejs {{ cookiecutter.__nodejs }}
+pnpm {{ cookiecutter.__pnpm }}
